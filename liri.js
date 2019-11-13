@@ -3,6 +3,7 @@ const Spotify = require("node-spotify-api");
 var keys = require("./keys.js");
 var axios = require("axios");
 var moment = require("moment");
+var fs = require("fs");
 
 
 // var seatGeek = new seatGeek(keys.seatGeek);
@@ -33,7 +34,7 @@ switch (action) {
         break;
 
     case "do-what-it-says":
-        console.log("Wheeeeew!");
+        doThis();
         break;
 }
 
@@ -90,4 +91,20 @@ function getSong() {
 
 }
 
+function doThis(){
 
+    fs.readFile("random.txt", "utf8", function(err, data) {
+        if (err) {
+          return console.log(err);
+        }
+        data = data.split(", ");
+
+        if (data[0] === "spotify-this-song"){
+            song = data[1];
+            getSong();
+        }
+
+        console.log(data);
+});
+
+}
